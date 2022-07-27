@@ -1,0 +1,7 @@
+server:
+  error:
+    include-stacktrace: on_param
+
+api:
+  base-url: "https://brasilapi.com.br"
+  cep-v2: "/api/cep/v2/{cep}"

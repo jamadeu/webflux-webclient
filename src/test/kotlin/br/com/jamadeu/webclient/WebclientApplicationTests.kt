@@ -1,4 +1,4 @@
-package br.com.jamadeu.Webclient
+package br.com.jamadeu.webclient
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
