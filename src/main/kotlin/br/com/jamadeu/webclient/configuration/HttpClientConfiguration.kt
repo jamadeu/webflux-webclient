@@ -1,7 +1,7 @@
 package br.com.jamadeu.webclient.configuration
 
-import br.com.jamadeu.webclient.configuration.properties.HttpClientConfigProperties
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
@@ -10,14 +10,15 @@ import reactor.core.publisher.Mono
 
 @Configuration
 class HttpClientConfiguration(
-    private val httpClientConfigProperties: HttpClientConfigProperties
+    @Value("\${api.base-url}")
+    private val baseUrl: String
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @Bean
     fun webClient(): WebClient = WebClient.builder()
-        .baseUrl(httpClientConfigProperties.baseUrl)
+        .baseUrl(baseUrl)
         .filter(logRequestFilter())
         .build()
 

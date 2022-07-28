@@ -3,8 +3,8 @@ package br.com.jamadeu.webclient.adapter.output.http
 import br.com.jamadeu.webclient.adapter.output.http.exception.ClientExceptionUtils
 import br.com.jamadeu.webclient.adapter.output.http.model.AddressByCepV2Response
 import br.com.jamadeu.webclient.configuration.HttpClientConfiguration
-import br.com.jamadeu.webclient.configuration.properties.HttpClientConfigProperties
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -15,7 +15,8 @@ import java.util.logging.Level
 
 @Service
 class HttpClient(
-    private val httpClientConfigProperties: HttpClientConfigProperties,
+    @Value("\${api.cep-v2}")
+    private val uriCepV2: String,
     private val httpClientConfiguration: HttpClientConfiguration,
     private val clientExceptionUtils: ClientExceptionUtils
 ) {
@@ -26,7 +27,7 @@ class HttpClient(
         logger.info("Starting searching adrres, cep - $cep")
         return httpClientConfiguration.webClient()
             .get()
-            .uri(httpClientConfigProperties.cepV2, cep)
+            .uri(uriCepV2, cep)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .retrieve()
             .onStatus(HttpStatus::isError) {
